@@ -10,125 +10,382 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@500;700&family=Jost:wght@400;600&display=swap"
         rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --bg-body: #f9f9f7;
             --text-main: #2c2c2c;
+            --text-gray: #6e6e6e;
             --col-terra: #e68e6d;
+            --col-accent: #e68e6d;
+            /* Type specific color */
             --font-sans: "Noto Sans JP", sans-serif;
             --font-serif: "Shippori Mincho", serif;
+            --font-en: "Jost", sans-serif;
+            --radius-lg: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
             font-family: var(--font-sans);
             color: var(--text-main);
-            background: var(--bg-body);
+            background-color: var(--bg-body);
             line-height: 1.8;
-            margin: 0;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 60px 20px;
+        /* Animation */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-up {
+            animation: fadeUp 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.6s;
+        }
+
+        /* Header */
+        .header-simple {
+            padding: 20px;
             text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-main);
+            letter-spacing: 0.05em;
+        }
+
+        /* Hero Section */
+        .result-hero {
+            padding: 120px 20px 60px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(230, 142, 109, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
         }
 
         .result-badge {
             display: inline-block;
-            background: var(--col-terra);
+            background: var(--col-accent);
             color: #fff;
-            padding: 5px 20px;
-            border-radius: 20px;
+            padding: 6px 24px;
+            border-radius: 50px;
+            font-family: var(--font-en);
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 10px rgba(230, 142, 109, 0.3);
+        }
+
+        .type-icon-wrapper {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .type-icon {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #fff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .type-icon-deco {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: bold;
-            margin-bottom: 20px;
+            color: var(--col-accent);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            font-family: var(--font-en);
+            font-size: 1.2rem;
         }
 
         .result-title {
             font-family: var(--font-serif);
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            line-height: 1.3;
         }
 
-        .result-img {
-            width: 150px;
-            height: 150px;
-            background: #ddd;
-            border-radius: 50%;
-            margin: 0 auto 30px;
-            object-fit: cover;
+        .result-copy {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            margin-bottom: 3rem;
         }
 
-        .result-desc {
-            text-align: left;
+        /* Content Card */
+        .content-card {
+            max-width: 800px;
+            margin: 0 auto 60px;
             background: #fff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            margin-bottom: 40px;
+            border-radius: var(--radius-lg);
+            padding: 60px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
         }
 
-        .btn {
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--col-accent);
+        }
+
+        .section-head {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
             display: inline-block;
-            padding: 15px 40px;
-            background: #333;
+            background: linear-gradient(transparent 70%, rgba(230, 142, 109, 0.2) 70%);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 4rem;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .feature-text {
+            font-size: 1rem;
+            line-height: 2;
+            text-align: justify;
+        }
+
+        .job-list {
+            list-style: none;
+            background: #fcfcfc;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #eee;
+        }
+
+        .job-list li {
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+            font-weight: 500;
+        }
+
+        .job-list li::before {
+            content: '✔';
+            position: absolute;
+            left: 0;
+            color: var(--col-accent);
+            font-weight: bold;
+        }
+
+        .job-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Action Area */
+        .action-area {
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--text-main);
             color: #fff;
+            padding: 1.2rem 4rem;
+            border-radius: 50px;
             text-decoration: none;
-            border-radius: 30px;
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            background: #000;
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 20px;
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-bottom: 1px solid transparent;
             transition: 0.3s;
         }
 
-        .btn:hover {
-            opacity: 0.8;
-            transform: translateY(-2px);
+        .btn-back:hover {
+            border-color: var(--text-gray);
         }
 
-        .chart-mock {
-            width: 100%;
-            height: 200px;
-            background: #f0f0f0;
-            border-radius: 8px;
-            margin: 20px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-gray);
+            font-size: 0.8rem;
+            border-top: 1px solid #eee;
+        }
+
+        @media (max-width: 768px) {
+            .result-hero {
+                padding-top: 100px;
+            }
+
+            .result-title {
+                font-size: 2rem;
+            }
+
+            .content-card {
+                padding: 30px 20px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .feature-text {
+                order: 1;
+            }
+
+            .chart-container {
+                order: 2;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
+
+    <header class="header-simple">
+        <a href="index.html" class="logo">Skill Map Lab</a>
+    </header>
+
+    <div class="result-hero fade-up">
         <div class="result-badge">DIAGNOSIS RESULT</div>
-        <img src="https://placehold.co/300x300/e68e6d/fff?text=A" alt="Type A" class="result-img">
-        <h1 class="result-title">個人事業主タイプ</h1>
-        <p style="font-size: 1.2rem; margin-bottom: 3rem;">自分の名前で価値を届ける、<br>独立独歩のチャレンジャー。</p>
 
-        <div class="result-desc">
-            <h3 style="font-family: var(--font-serif); margin-bottom: 1rem;">特徴と強み</h3>
-            <p>あなたは「自分で決めて、自分で動く」ことに喜びを感じるリーダー気質を持っています。指示を待つよりも、自ら課題を見つけて解決策を提案する方が得意ではないでしょうか？<br>
-                その行動力と責任感は、フリーランスや起業家として成功するための最大の武器です。</p>
-
-            <div class="chart-container"
-                style="position: relative; height:300px; width:100%; max-width:500px; margin:0 auto;">
-                <canvas id="typeChart"></canvas>
-            </div>
-
-            <h3 style="font-family: var(--font-serif); margin-top: 2rem; margin-bottom: 1rem;">おすすめの働き方</h3>
-            <ul style="padding-left: 20px;">
-                <li>オリジナル講座やコンテンツの販売</li>
-                <li>コンサルティング・コーチング</li>
-                <li>コミュニティ運営</li>
-            </ul>
+        <div class="type-icon-wrapper">
+            <img src="https://placehold.co/300x300/e68e6d/fff?text=A" alt="Type A" class="type-icon">
+            <div class="type-icon-deco">A</div>
         </div>
 
-        <a href="courses.html" class="btn">おすすめ講座を見る</a>
-        <div style="margin-top: 20px;"><a href="index.html" style="color: #999; text-decoration: none;">トップに戻る</a></div>
+        <h1 class="result-title">個人事業主タイプ</h1>
+        <p class="result-copy">自分の名前で価値を届ける、<br>独立独歩のチャレンジャー。</p>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <div class="content-card fade-up delay-1">
+
+        <!-- Section: Features -->
+        <div class="section-head">
+            <h2 class="section-title">特徴と強み</h2>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-text">
+                <p>あなたは「自分で決めて、自分で動く」ことに喜びを感じるリーダー気質を持っています。誰かの指示を待つよりも、自ら課題を見つけて解決策を提案する方が得意ではないでしょうか？</p>
+                <p style="margin-top:1rem;">
+                    その高い行動力と責任感は、フリーランスや起業家として成功するための最大の武器です。自分のスキルを商品化し、直接顧客に届けることで大きなやりがいを感じられるでしょう。</p>
+            </div>
+            <div class="chart-container">
+                <canvas id="typeChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Section: Work Style -->
+        <div class="section-head">
+            <h2 class="section-title">おすすめの働き方</h2>
+        </div>
+
+        <ul class="job-list">
+            <li>オリジナル講座やコンテンツの販売</li>
+            <li>コンサルティング・コーチング</li>
+            <li>コミュニティ運営・プロジェクトリーダー</li>
+        </ul>
+
+        <!-- Action -->
+        <div class="action-area">
+            <p style="margin-bottom: 1.5rem; font-size: 0.95rem;">あなたにぴったりのスキルを学びませんか？</p>
+            <a href="courses.html" class="btn-primary">おすすめの講座を見る</a>
+            <br>
+            <a href="index.html" class="btn-back">トップページに戻る</a>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Skill Map Lab. All Rights Reserved.</p>
+    </footer>
+
     <script>
         const ctx = document.getElementById('typeChart').getContext('2d');
+        // Type A Color: #e68e6d
+        const colorMain = 'rgba(230, 142, 109, 1)';
+        const colorBg = 'rgba(230, 142, 109, 0.2)';
+
         new Chart(ctx, {
             type: 'radar',
             data: {
@@ -136,24 +393,33 @@
                 datasets: [{
                     label: 'Type A の特性',
                     data: [5, 2, 4, 3, 2],
-                    backgroundColor: 'rgba(230, 142, 109, 0.2)',
-                    borderColor: 'rgba(230, 142, 109, 1)',
+                    backgroundColor: colorBg,
+                    borderColor: colorMain,
                     borderWidth: 2,
-                    pointBackgroundColor: 'rgba(230, 142, 109, 1)',
+                    pointBackgroundColor: colorMain,
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: colorMain
                 }]
             },
             options: {
                 scales: {
                     r: {
-                        angleLines: { display: true },
+                        angleLines: { display: true, color: '#eee' },
+                        grid: { color: '#eee' },
+                        pointLabels: {
+                            font: { size: 12, family: '"Noto Sans JP", sans-serif' },
+                            color: '#666'
+                        },
                         suggestedMin: 0,
                         suggestedMax: 5,
-                        ticks: { stepSize: 1 }
+                        ticks: { stepSize: 1, display: false }
                     }
                 },
                 plugins: {
                     legend: { display: false }
-                }
+                },
+                maintainAspectRatio: false
             }
         });
     </script>
