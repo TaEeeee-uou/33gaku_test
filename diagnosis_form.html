@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnosis Form | Skill Map Lab</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@500;700&family=Jost:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-body: #f9f9f7;
+            --text-main: #2c2c2c;
+            --text-gray: #6e6e6e;
+            --col-terra: #e68e6d;
+            --col-blue: #7da8c3;
+            --col-yellow: #f0cd68;
+            --col-green: #94bca0;
+            --font-sans: "Noto Sans JP", sans-serif;
+            --font-serif: "Shippori Mincho", serif;
+            --font-en: "Jost", sans-serif;
+            --radius-md: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--text-main);
+            line-height: 1.8;
+            background-color: var(--bg-body);
+        }
+
+        .header-simple {
+            padding: 20px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px 100px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #eee;
+            border-radius: 3px;
+            margin: 20px 0 40px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--col-terra), var(--col-blue));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .form-section {
+            background: #fff;
+            padding: 2.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            position: relative;
+            border: 1px solid #eee;
+        }
+
+        .section-badge {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-desc {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .question-item {
+            margin-bottom: 2.5rem;
+        }
+
+        .q-label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .q-num {
+            color: var(--col-blue);
+            font-family: var(--font-en);
+            margin-right: 0.5rem;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .radio-box {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #fff;
+        }
+
+        .radio-box:hover {
+            border-color: #ddd;
+            background: #fafafa;
+        }
+
+        .radio-box input[type="radio"] {
+            margin-right: 15px;
+            accent-color: var(--col-terra);
+            transform: scale(1.2);
+        }
+
+        .radio-box:has(input:checked) {
+            border-color: var(--col-terra);
+            background: #fff9f5;
+            font-weight: 600;
+        }
+
+        .btn-submit {
+            background: var(--text-main);
+            color: #fff;
+            border: none;
+            padding: 1.2rem 5rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+            font-family: var(--font-serif);
+            display: block;
+            margin: 3rem auto 0;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            opacity: 0.9;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Result Area */
+        #resultArea {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            z-index: 200;
+            overflow-y: auto;
+            padding: 40px 20px;
+        }
+
+        .result-content {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border: 1px solid #eee;
+        }
+
+        .result-type {
+            font-size: 2rem;
+            font-family: var(--font-serif);
+            color: var(--col-terra);
+            margin: 1rem 0;
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 2rem;
+            color: var(--text-gray);
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        @media(max-width: 600px) {
+            .form-section {
+                padding: 1.5rem;
+            }
+
+            .radio-box {
+                padding: 12px;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header-simple">
+        <a href="index.html" class="logo">Skill Map Lab</a>
+    </header>
+
+    <div class="container">
+        <div class="text-center">
+            <h1 style="font-family: var(--font-serif); font-size: 1.8rem;">スキルマップ診断</h1>
+            <p style="color: var(--text-gray); font-size: 0.9rem; margin-top: 0.5rem;">全15問 / 所要時間 約3分</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <form id="diagnosisForm" onsubmit="event.preventDefault(); showResult();">
+
+            <!-- Section 1: Personality -->
+            <div class="form-section">
+                <div class="section-badge" style="background:var(--col-terra);">Personality</div>
+                <h2 class="section-title">性格・志向</h2>
+                <p class="section-desc">あなたの働き方の好みや価値観について教えてください。</p>
+
+                <!-- Q1 -->
+                <div class="question-item">
+                    <label class="q-label"><span class="q-num">Q1.</span> 作業スタイルの好みは？</label>
+                    <div class="radio-group">
+                        <label class="radio-box"><input type="radio" name="q1" value="A"
+                                required>一人で黙々と集中して作業したい</label>
+                        <label class="radio-box"><input type="radio" name="q1" value="B">チームやお客様と会話しながら進めたい</label>
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="question-item">
+                    <label class="q-label"><span class="q-num">Q2.</span> チーム内での役割は？</label>
+                    <div class="radio-group">
+                        <label class="radio-box"><input type="radio" name="q2" value="A"
+                                required>方針を決めて皆を引っ張るリーダー</label>
+                        <label class="radio-box"><input type="radio" name="q2" value="B">細かい実務を支えるサポーター</label>
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="question-item">
+                    <label class="q-label"><span class="q-num">Q3.</span> 物事を判断するときは？</label>
+                    <div class="radio-group">
+                        <label class="radio-box"><input type="radio" name="q3" value="A"
+                                required>データや事実に基づいて論理的に決める</label>
+                        <label class="radio-box"><input type="radio" name="q3" value="B">直感やその場の雰囲気を大切にする</label>
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="question-item">
+                    <label class="q-label"><span class="q-num">Q4.</span> 変化に対するスタンスは？</label>
+                    <div class="radio-group">
+                        <label class="radio-box"><input type="radio" name="q4" value="A"
+                                required>決まったルーチンワークを安定して続けたい</label>
+                        <label class="radio-box"><input type="radio" name="q4" value="B">新しいことに次々と挑戦したい</label>
+                    </div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="question-item">
+                    <label class="q-label"><span class="q-num">Q5.</span> 仕事のやりがいは？</label>
+                    <div class="radio-group">
+                        <label class="radio-box"><input type="radio" name="q5" value="A"
+                                required>「ありがとう」と感謝されること</label>
+                        <label class="radio-box"><input type="radio" name="q5" value="B">目に見える成果や数字が出ること</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Lifestyle -->
+            <div class="form-section">
+                <div class="section-badge" style="background:var(--col-blue);">Lifestyle</div>
+                <h2 class="section-title">環境・時間</h2>
+                <p class="section-desc">現在の生活スタイルや学習環境について教えてください。</p>
+
+                <!-- Q6 -->
+                <div class="question-item">
+                    <label class="q-label"><span class="q-num">Q6.</span> 1日の学習・作業時間は？</label>
+                    <div class="radio-group">
+                        <label class="radio-box"><input type="radio" name="q6" value="A"
+                                required>1時間未満の隙間時間（移動中など）</label>
+                        <label class="radio-box"><input type="radio" name="q6" value="B">1〜2時間程度</label>
+                        <label class="radio-box"><input type="radio" name="q6" value="C">3時間以上しっかり確保できる</label>
+                    </div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="question-item">
+                    <label class="q-label"><span class="q-num">Q7.</span> メインで使用するデバイスは？</label>
+                    <div class="radio-group">
+                        <label class="radio-box"><input type="radio" name="q7" value="A" required>スマートフォンのみ</label>
+                        <label class="radio-box"><input type="radio" name="q7" value="B">パソコン（ノートPC含む）</label>
+                    </div>
+                </div>
+
+                <!-- Q8 -->
+                <div class="question-item">
+                    <label class="q-label"><span class="q-num">Q8.</span> 活動しやすい時間帯は？</label>
+                    <div class="radio-group">
+                        <label class="radio-box"><input type="radio" name="q8" value="A" required>朝型（早朝〜午前中）</label>
+                        <label class="radio-box"><input type="radio" name="q8" value="B">夜型（子供が寝た後や深夜）</label>
+                    </div>
+                </div>
+
+                <!-- Q9 -->
+                <div class="question-item">
+                    <label class="q-label"><span class="q-num">Q9.</span> 希望する作業場所は？</label>
+                    <div class="radio-group">
+                        <label class="radio-box"><input type="radio" name="q9" value="A" required>完全に自宅（在宅）</label>
+                        <label class="radio-box"><input type="radio" name="q9" value="B">カフェやコワーキングスペースなど外に出たい</label>
+                    </div>
+                </div>
+
+                <!-- Q10 -->
+                <div class="question-item">
+                    <label class="q-label"><span class="q-num">Q10.</span> 学びへの投資（予算）は？</label>
+                    <div class="radio-group">
+                        <label class="radio-box"><input type="radio" name="q10" value="A"
+                                required>まずは無料や低コストから始めたい</label>
+                        <label class="radio-box"><input type="radio" name="q10" value="B">将来のためにある程度投資できる</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Skills -->
+            <div class="form-section">
+                <div class="section-badge" style="background:var(--col-yellow);">Skills</div>
+                <h2 class="section-title">経験・強み</h2>
+                <p class="section-desc">これまでの経験や得意なスキルについて教えてください。</p>
+
+                <!-- Q11 -->
+                <div class="question-item">
+                    <label class="q-label"><span class="q-num">Q11.</span> これまでの職務経験に近いのは？</label>
+                    <div class="radio-group">
+                        <label class="radio-box"><input type="radio" name="q11" value="A"
+                                required>事務・総務・経理などのオフィスワーク</label>
+                        <label class="radio-box"><input type="radio" name="q11" value="B">接客・販売・営業などの対人業務</label>
+                        <label class="radio-box"><input type="radio" name="q11" value="C">特にこれといった職歴はない / 未経験</label>
+                    </div>
+                </div>
+
+                <!-- Q12 -->
+                <div class="question-item">
+                    <label class="q-label"><span class="q-num">Q12.</span> PCツールの習熟度は？</label>
+                    <div class="radio-group">
+                        <label class="radio-box"><input type="radio" name="q12" value="A"
+                                required>Word/Excelの基本操作はできる</label>
+                        <label class="radio-box"><input type="radio" name="q12"
+                                value="B">PowerPointやCanvaで資料を作るのが好き</label>
+                        <label class="radio-box"><input type="radio" name="q12" value="C">PC操作自体に苦手意識がある</label>
+                    </div>
+                </div>
+
+                <!-- Q13 -->
+                <div class="question-item">
+                    <label class="q-label"><span class="q-num">Q13.</span> 文章を書くことについて</label>
+                    <div class="radio-group">
+                        <label class="radio-box"><input type="radio" name="q13" value="A" required>苦ではない /
+                            日記やSNSをよく書く</label>
+                        <label class="radio-box"><input type="radio" name="q13" value="B">苦手 / 何を書けばいいかわからない</label>
+                    </div>
+                </div>
+
+                <!-- Q14 -->
+                <div class="question-item">
+                    <label class="q-label"><span class="q-num">Q14.</span> SNSの利用状況は？</label>
+                    <div class="radio-group">
+                        <label class="radio-box"><input type="radio" name="q14" value="A" required>見る専門（ROM専）</label>
+                        <label class="radio-box"><input type="radio" name="q14" value="B">日常的に投稿・発信している</label>
+                        <label class="radio-box"><input type="radio" name="q14" value="C">フォロワーを増やす工夫をしたことがある</label>
+                    </div>
+                </div>
+
+                <!-- Q15 -->
+                <div class="question-item">
+                    <label class="q-label"><span class="q-num">Q15.</span> 英語への抵抗感は？</label>
+                    <div class="radio-group">
+                        <label class="radio-box"><input type="radio" name="q15" value="A" required>全くわからない /
+                            見たくない</label>
+                        <label class="radio-box"><input type="radio" name="q15" value="B">翻訳ツールを使えばなんとかなる</label>
+                        <label class="radio-box"><input type="radio" name="q15" value="C">日常会話レベルならわかる / 好き</label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">診断結果を表示する</button>
+
+        </form>
+    </div>
+
+    <!-- Result Overlay -->
+    <div id="resultArea">
+        <div class="result-content">
+            <p style="color:var(--text-gray); font-size:0.9rem; letter-spacing:0.1em;">DIAGNOSIS RESULT</p>
+            <h2 style="margin-top:1rem;">あなたの診断結果</h2>
+
+            <div style="margin: 2rem 0;">
+                <img src="https://placehold.co/150x150/e68e6d/fff?text=Type+B" alt="Type Icon"
+                    style="margin:0 auto; border-radius:50%;">
+                <div class="result-type">事務テレワーカータイプ</div>
+                <p style="line-height:1.8; color:var(--text-gray); text-align:left; margin-top:1.5rem;">
+                    あなたは「サポート気質」があり、コツコツと正確に作業を進めるのが得意なタイプです。<br>
+                    在宅での事務代行や、オンラインアシスタントとしての働き方が非常に向いています。<br>
+                    まずはGoogle Workspaceなどのクラウドツールをマスターすることをおすすめします。
+                </p>
+            </div>
+
+            <div style="background:#f9f9f7; padding:1.5rem; border-radius:12px; text-align:left;">
+                <h4 style="font-family:var(--font-serif); margin-bottom:1rem;">おすすめの講座</h4>
+                <ul style="list-style:none; font-size:0.95rem;">
+                    <li style="margin-bottom:0.5rem;">✅ 在宅ワークの基礎知識</li>
+                    <li style="margin-bottom:0.5rem;">✅ Googleスプレッドシート活用術</li>
+                    <li>✅ チャットコミュニケーション講座</li>
+                </ul>
+            </div>
+
+            <a onclick="location.reload()" class="btn-back">もう一度診断する</a>
+            <div style="margin-top:1rem;">
+                <a href="index.html" class="btn-back"
+                    style="text-decoration:none; border:1px solid #ddd; padding:10px 20px; border-radius:30px;">トップページへ戻る</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Progress Bar Logic
+        const form = document.getElementById('diagnosisForm');
+        const inputs = form.querySelectorAll('input[type="radio"]');
+        const totalQuestions = 15; // Q1 to Q15
+        const progressFill = document.getElementById('progressFill');
+
+        inputs.forEach(input => {
+            input.addEventListener('change', updateProgress);
+        });
+
+        function updateProgress() {
+            // Count unique question names that have a checked value
+            const checkedNames = new Set();
+            inputs.forEach(inp => {
+                if (inp.checked) {
+                    checkedNames.add(inp.name);
+                }
+            });
+            const progress = (checkedNames.size / totalQuestions) * 100;
+            progressFill.style.width = progress + '%';
+        }
+
+        function showResult() {
+            // In a real app, you would calculate the result based on inputs here.
+            // For now, we just show the mock result.
+            document.getElementById('resultArea').style.display = 'block';
+        }
+    </script>
+</body>
+
+</html>
