@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>診断結果: Type A | Skill Map Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@500;700&family=Jost:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #f9f9f7;
+            --text-main: #2c2c2c;
+            --col-terra: #e68e6d;
+            --font-sans: "Noto Sans JP", sans-serif;
+            --font-serif: "Shippori Mincho", serif;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--text-main);
+            background: var(--bg-body);
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .result-badge {
+            display: inline-block;
+            background: var(--col-terra);
+            color: #fff;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .result-title {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .result-img {
+            width: 150px;
+            height: 150px;
+            background: #ddd;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            object-fit: cover;
+        }
+
+        .result-desc {
+            text-align: left;
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+            transform: translateY(-2px);
+        }
+
+        .chart-mock {
+            width: 100%;
+            height: 200px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="result-badge">DIAGNOSIS RESULT</div>
+        <img src="https://placehold.co/300x300/e68e6d/fff?text=A" alt="Type A" class="result-img">
+        <h1 class="result-title">個人事業主タイプ</h1>
+        <p style="font-size: 1.2rem; margin-bottom: 3rem;">自分の名前で価値を届ける、<br>独立独歩のチャレンジャー。</p>
+
+        <div class="result-desc">
+            <h3 style="font-family: var(--font-serif); margin-bottom: 1rem;">特徴と強み</h3>
+            <p>あなたは「自分で決めて、自分で動く」ことに喜びを感じるリーダー気質を持っています。指示を待つよりも、自ら課題を見つけて解決策を提案する方が得意ではないでしょうか？<br>
+                その行動力と責任感は、フリーランスや起業家として成功するための最大の武器です。</p>
+
+            <div class="chart-mock">ここにレーダーチャートが入ります（リーダーシップ・行動力が高い）</div>
+
+            <h3 style="font-family: var(--font-serif); margin-top: 2rem; margin-bottom: 1rem;">おすすめの働き方</h3>
+            <ul style="padding-left: 20px;">
+                <li>オリジナル講座やコンテンツの販売</li>
+                <li>コンサルティング・コーチング</li>
+                <li>コミュニティ運営</li>
+            </ul>
+        </div>
+
+        <a href="courses.html" class="btn">おすすめ講座を見る</a>
+        <div style="margin-top: 20px;"><a href="index.html" style="color: #999; text-decoration: none;">トップに戻る</a></div>
+    </div>
+</body>
+
+</html>

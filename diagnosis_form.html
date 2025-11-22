@@ -498,9 +498,83 @@
         }
 
         function showResult() {
-            // In a real app, you would calculate the result based on inputs here.
-            // For now, we just show the mock result.
-            document.getElementById('resultArea').style.display = 'block';
+            const form = document.getElementById('diagnosisForm');
+            if (!form.checkValidity()) {
+                // フォームが未完了の場合はブラウザの標準バリデーションを表示
+                return;
+            }
+
+            // スコア初期化
+            let scores = {
+                A: 0, // 個人事業主
+                B: 0, // 事務テレワーカー
+                C: 0, // SNS・クリエイター
+                D: 0  // スモールワーク
+            };
+
+            const formData = new FormData(form);
+
+            // ロジック（簡易版）
+            // Q1: 作業スタイル (A:一人 -> B/D, B:会話 -> A/C)
+            if (formData.get('q1') === 'A') { scores.B += 2; scores.D += 2; }
+            else { scores.A += 2; scores.C += 2; }
+
+            // Q2: 役割 (A:リーダー -> A, B:サポート -> B)
+            if (formData.get('q2') === 'A') { scores.A += 3; }
+            else { scores.B += 3; scores.D += 1; }
+
+            // Q3: 判断 (A:論理 -> B, B:直感 -> C)
+            if (formData.get('q3') === 'A') { scores.B += 2; }
+            else { scores.C += 2; scores.A += 1; }
+
+            // Q4: 変化 (A:安定 -> B/D, B:挑戦 -> A/C)
+            if (formData.get('q4') === 'A') { scores.B += 2; scores.D += 2; }
+            else { scores.A += 3; scores.C += 2; }
+
+            // Q5: やりがい (A:感謝 -> B/C, B:成果 -> A)
+            if (formData.get('q5') === 'A') { scores.B += 2; scores.C += 1; }
+            else { scores.A += 3; }
+
+            // Q6: 時間 (A:隙間 -> D, B:1-2h -> B/C, C:3h+ -> A)
+            const q6 = formData.get('q6');
+            if (q6 === 'A') { scores.D += 5; } // Dに強く重み付け
+            else if (q6 === 'B') { scores.B += 2; scores.C += 2; }
+            else { scores.A += 3; scores.B += 1; }
+
+            // Q7: デバイス (A:スマホ -> D/C, B:PC -> A/B)
+            if (formData.get('q7') === 'A') { scores.D += 3; scores.C += 1; }
+            else { scores.A += 2; scores.B += 3; }
+
+            // Q11: 経験 (A:事務 -> B, B:接客 -> A/C, C:なし -> D)
+            const q11 = formData.get('q11');
+            if (q11 === 'A') { scores.B += 3; }
+            else if (q11 === 'B') { scores.A += 2; scores.C += 2; }
+            else { scores.D += 3; }
+
+            // Q12: PCスキル (A:基本 -> B, B:作成好き -> C/A, C:苦手 -> D)
+            const q12 = formData.get('q12');
+            if (q12 === 'A') { scores.B += 2; }
+            else if (q12 === 'B') { scores.C += 3; scores.A += 1; }
+            else { scores.D += 3; }
+
+            // Q14: SNS (A:見るだけ -> B/D, B:発信 -> C/A)
+            if (formData.get('q14') === 'B' || formData.get('q14') === 'C') { scores.C += 4; scores.A += 1; }
+            else { scores.B += 1; scores.D += 1; }
+
+            // 最高スコアのタイプを判定
+            let maxScore = -1;
+            let resultType = 'B'; // デフォルト
+
+            for (const [type, score] of Object.entries(scores)) {
+                if (score > maxScore) {
+                    maxScore = score;
+                    resultType = type;
+                }
+            }
+
+            // ページ遷移
+            // ローカルテスト用とGitHub Pages用でパスが変わらないよう相対パスで指定
+            window.location.href = `result_${resultType.toLowerCase()}.html`;
         }
     </script>
 </body>

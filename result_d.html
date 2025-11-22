@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>診断結果: Type D | Skill Map Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@500;700&family=Jost:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #f9f9f7;
+            --text-main: #2c2c2c;
+            --col-green: #94bca0;
+            --font-sans: "Noto Sans JP", sans-serif;
+            --font-serif: "Shippori Mincho", serif;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--text-main);
+            background: var(--bg-body);
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .result-badge {
+            display: inline-block;
+            background: var(--col-green);
+            color: #fff;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .result-title {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .result-img {
+            width: 150px;
+            height: 150px;
+            background: #ddd;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            object-fit: cover;
+        }
+
+        .result-desc {
+            text-align: left;
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+            transform: translateY(-2px);
+        }
+
+        .chart-mock {
+            width: 100%;
+            height: 200px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="result-badge">DIAGNOSIS RESULT</div>
+        <img src="https://placehold.co/300x300/94bca0/fff?text=D" alt="Type D" class="result-img">
+        <h1 class="result-title">スモールワークタイプ</h1>
+        <p style="font-size: 1.2rem; margin-bottom: 3rem;">暮らしを大切にしながら、<br>無理なく賢く稼ぐ。</p>
+
+        <div class="result-desc">
+            <h3 style="font-family: var(--font-serif); margin-bottom: 1rem;">特徴と強み</h3>
+            <p>あなたは現在、仕事よりも家庭やプライベート、あるいは育児などを優先すべき時期にいるかもしれません。無理に大きな時間を割くのではなく、隙間時間をパズルのように組み合わせて価値を生み出すのが得意です。<br>
+                スマホ一台で完結する作業や、短時間のタスクを積み重ねるスタイルが最も合っています。</p>
+
+            <div class="chart-mock">ここにレーダーチャートが入ります（柔軟性・効率性が高い）</div>
+
+            <h3 style="font-family: var(--font-serif); margin-top: 2rem; margin-bottom: 1rem;">おすすめの働き方</h3>
+            <ul style="padding-left: 20px;">
+                <li>ポイ活・アンケートモニター</li>
+                <li>フリマアプリでの物販</li>
+                <li>短時間のタスクワーク・データ入力</li>
+            </ul>
+        </div>
+
+        <a href="courses.html" class="btn">おすすめ講座を見る</a>
+        <div style="margin-top: 20px;"><a href="index.html" style="color: #999; text-decoration: none;">トップに戻る</a></div>
+    </div>
+</body>
+
+</html>
