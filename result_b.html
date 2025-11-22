@@ -109,7 +109,10 @@
             <p>あなたは細やかな気配りができ、コツコツと正確に作業を進めるのが得意なタイプです。派手に目立つことよりも、誰かの役に立っている実感に喜びを感じるのではないでしょうか？<br>
                 オンラインでのテキストコミュニケーション能力や事務処理能力は、リモートワーク時代に最も求められるスキルの一つです。</p>
 
-            <div class="chart-mock">ここにレーダーチャートが入ります（実務能力・サポート力が高い）</div>
+            <div class="chart-container"
+                style="position: relative; height:300px; width:100%; max-width:500px; margin:0 auto;">
+                <canvas id="typeChart"></canvas>
+            </div>
 
             <h3 style="font-family: var(--font-serif); margin-top: 2rem; margin-bottom: 1rem;">おすすめの働き方</h3>
             <ul style="padding-left: 20px;">
@@ -122,6 +125,38 @@
         <a href="courses.html" class="btn">おすすめ講座を見る</a>
         <div style="margin-top: 20px;"><a href="index.html" style="color: #999; text-decoration: none;">トップに戻る</a></div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('typeChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['主体性', '協調性', '論理性', '感性', '安定性'],
+                datasets: [{
+                    label: 'Type B の特性',
+                    data: [2, 5, 5, 2, 5],
+                    backgroundColor: 'rgba(125, 168, 195, 0.2)',
+                    borderColor: 'rgba(125, 168, 195, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgba(125, 168, 195, 1)',
+                }]
+            },
+            options: {
+                scales: {
+                    r: {
+                        angleLines: { display: true },
+                        suggestedMin: 0,
+                        suggestedMax: 5,
+                        ticks: { stepSize: 1 }
+                    }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>

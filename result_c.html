@@ -109,7 +109,10 @@
             <p>あなたは自分の世界観を持っており、それを表現することに長けています。「好き」や「いいな」と感じたものを、写真や言葉、デザインで誰かに伝えるのが得意ではありませんか？<br>
                 SNSが普及した現代において、あなたのその感性は立派なビジネススキルになります。</p>
 
-            <div class="chart-mock">ここにレーダーチャートが入ります（発信力・センスが高い）</div>
+            <div class="chart-container"
+                style="position: relative; height:300px; width:100%; max-width:500px; margin:0 auto;">
+                <canvas id="typeChart"></canvas>
+            </div>
 
             <h3 style="font-family: var(--font-serif); margin-top: 2rem; margin-bottom: 1rem;">おすすめの働き方</h3>
             <ul style="padding-left: 20px;">
@@ -122,6 +125,38 @@
         <a href="courses.html" class="btn">おすすめ講座を見る</a>
         <div style="margin-top: 20px;"><a href="index.html" style="color: #999; text-decoration: none;">トップに戻る</a></div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('typeChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['主体性', '協調性', '論理性', '感性', '安定性'],
+                datasets: [{
+                    label: 'Type C の特性',
+                    data: [4, 3, 2, 5, 2],
+                    backgroundColor: 'rgba(240, 205, 104, 0.2)',
+                    borderColor: 'rgba(240, 205, 104, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgba(240, 205, 104, 1)',
+                }]
+            },
+            options: {
+                scales: {
+                    r: {
+                        angleLines: { display: true },
+                        suggestedMin: 0,
+                        suggestedMax: 5,
+                        ticks: { stepSize: 1 }
+                    }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>

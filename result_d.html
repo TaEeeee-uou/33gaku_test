@@ -109,7 +109,10 @@
             <p>あなたは現在、仕事よりも家庭やプライベート、あるいは育児などを優先すべき時期にいるかもしれません。無理に大きな時間を割くのではなく、隙間時間をパズルのように組み合わせて価値を生み出すのが得意です。<br>
                 スマホ一台で完結する作業や、短時間のタスクを積み重ねるスタイルが最も合っています。</p>
 
-            <div class="chart-mock">ここにレーダーチャートが入ります（柔軟性・効率性が高い）</div>
+            <div class="chart-container"
+                style="position: relative; height:300px; width:100%; max-width:500px; margin:0 auto;">
+                <canvas id="typeChart"></canvas>
+            </div>
 
             <h3 style="font-family: var(--font-serif); margin-top: 2rem; margin-bottom: 1rem;">おすすめの働き方</h3>
             <ul style="padding-left: 20px;">
@@ -122,6 +125,38 @@
         <a href="courses.html" class="btn">おすすめ講座を見る</a>
         <div style="margin-top: 20px;"><a href="index.html" style="color: #999; text-decoration: none;">トップに戻る</a></div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('typeChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['主体性', '協調性', '論理性', '感性', '安定性'],
+                datasets: [{
+                    label: 'Type D の特性',
+                    data: [2, 4, 3, 3, 4],
+                    backgroundColor: 'rgba(148, 188, 160, 0.2)',
+                    borderColor: 'rgba(148, 188, 160, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgba(148, 188, 160, 1)',
+                }]
+            },
+            options: {
+                scales: {
+                    r: {
+                        angleLines: { display: true },
+                        suggestedMin: 0,
+                        suggestedMax: 5,
+                        ticks: { stepSize: 1 }
+                    }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>
