@@ -631,11 +631,233 @@
         <div class="container text-center fade-up">
             <h2 style="font-family: var(--font-serif); margin-bottom: 2rem;">さあ、診断をはじめましょう</h2>
 
-            <div class="iframe-container">
-                <iframe
-                    src="https://docs.google.com/forms/d/e/1FAIpQLSfLRzGBrbi69_BiI8Ek-B3jcs4XUkyymm4YsD6MM-XlwBvPkw/viewform?embedded=true"
-                    width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
+            <!-- Original Diagnosis Form -->
+            <div class="custom-form-container" id="custom-form">
+                <form id="diagnosisForm" onsubmit="event.preventDefault(); showResult();">
+
+                    <!-- Section 1: Personality -->
+                    <div class="form-section fade-up">
+                        <div class="section-badge" style="background:var(--col-terra);">Personality</div>
+                        <h3>性格・志向</h3>
+                        <p class="section-desc">あなたの働き方の好みについて教えてください。</p>
+
+                        <div class="question-item">
+                            <label class="q-label">Q1. どちらの作業スタイルが好きですか？</label>
+                            <div class="radio-group">
+                                <label class="radio-box">
+                                    <input type="radio" name="q1" value="A" required>
+                                    <span class="radio-text">一人で黙々と集中する</span>
+                                </label>
+                                <label class="radio-box">
+                                    <input type="radio" name="q1" value="B">
+                                    <span class="radio-text">人とコミュニケーションを取る</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="question-item">
+                            <label class="q-label">Q2. チームでの役割はどちらが多いですか？</label>
+                            <div class="radio-group">
+                                <label class="radio-box">
+                                    <input type="radio" name="q2" value="A" required>
+                                    <span class="radio-text">皆を引っ張るリーダータイプ</span>
+                                </label>
+                                <label class="radio-box">
+                                    <input type="radio" name="q2" value="B">
+                                    <span class="radio-text">縁の下の力持ちサポートタイプ</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Lifestyle -->
+                    <div class="form-section fade-up">
+                        <div class="section-badge" style="background:var(--col-blue);">Lifestyle</div>
+                        <h3>環境・時間</h3>
+                        <p class="section-desc">現在の生活スタイルについて教えてください。</p>
+
+                        <div class="question-item">
+                            <label class="q-label">Q3. 1日に確保できる学習・作業時間は？</label>
+                            <div class="radio-group">
+                                <label class="radio-box">
+                                    <input type="radio" name="q3" value="A" required>
+                                    <span class="radio-text">1〜2時間の隙間時間</span>
+                                </label>
+                                <label class="radio-box">
+                                    <input type="radio" name="q3" value="B">
+                                    <span class="radio-text">3時間以上まとまった時間</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="question-item">
+                            <label class="q-label">Q4. メインで使用するデバイスは？</label>
+                            <div class="radio-group">
+                                <label class="radio-box">
+                                    <input type="radio" name="q4" value="A" required>
+                                    <span class="radio-text">スマートフォン中心</span>
+                                </label>
+                                <label class="radio-box">
+                                    <input type="radio" name="q4" value="B">
+                                    <span class="radio-text">パソコンもしっかり使える</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Skills -->
+                    <div class="form-section fade-up">
+                        <div class="section-badge" style="background:var(--col-yellow);">Skills</div>
+                        <h3>経験・強み</h3>
+                        <p class="section-desc">これまでの経験や得意なことについて教えてください。</p>
+
+                        <div class="question-item">
+                            <label class="q-label">Q5. これまでの経験に一番近いものは？</label>
+                            <div class="radio-group">
+                                <label class="radio-box">
+                                    <input type="radio" name="q5" value="A" required>
+                                    <span class="radio-text">事務・オフィスワーク</span>
+                                </label>
+                                <label class="radio-box">
+                                    <input type="radio" name="q5" value="B">
+                                    <span class="radio-text">接客・営業・サービス業</span>
+                                </label>
+                                <label class="radio-box">
+                                    <input type="radio" name="q5" value="C">
+                                    <span class="radio-text">デザイン・イラスト・制作</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-footer text-center fade-up">
+                        <button type="submit" class="btn-submit">診断結果を見る</button>
+                    </div>
+                </form>
+
+                <!-- Result Mock (Hidden by default) -->
+                <div id="resultArea"
+                    style="display:none; margin-top:3rem; padding:2rem; background:#f0f8ff; border-radius:12px;">
+                    <h3 style="color:var(--col-blue); margin-bottom:1rem;">診断完了（仮）</h3>
+                    <p>あなたのタイプは... <strong>「事務テレワーカータイプ」</strong> です！（※これはデモです）</p>
+                    <p style="font-size:0.9rem; color:#666; margin-top:0.5rem;">本来は回答内容に応じてロジックを組み、最適なタイプを表示します。</p>
+                </div>
             </div>
+
+            <style>
+                .custom-form-container {
+                    max-width: 700px;
+                    margin: 0 auto;
+                    text-align: left;
+                }
+
+                .form-section {
+                    background: #fff;
+                    padding: 2.5rem;
+                    border-radius: var(--radius-md);
+                    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+                    margin-bottom: 2rem;
+                    position: relative;
+                    border: 1px solid #eee;
+                }
+
+                .section-badge {
+                    position: absolute;
+                    top: -12px;
+                    left: 20px;
+                    color: #fff;
+                    font-size: 0.75rem;
+                    font-weight: 700;
+                    padding: 4px 12px;
+                    border-radius: 20px;
+                    letter-spacing: 0.1em;
+                    text-transform: uppercase;
+                }
+
+                .section-desc {
+                    font-size: 0.9rem;
+                    color: var(--text-gray);
+                    margin-bottom: 1.5rem;
+                    border-bottom: 1px solid #f0f0f0;
+                    padding-bottom: 1rem;
+                }
+
+                .question-item {
+                    margin-bottom: 2rem;
+                }
+
+                .question-item:last-child {
+                    margin-bottom: 0;
+                }
+
+                .q-label {
+                    display: block;
+                    font-weight: 700;
+                    margin-bottom: 0.8rem;
+                    color: var(--text-main);
+                }
+
+                .radio-group {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.8rem;
+                }
+
+                .radio-box {
+                    display: flex;
+                    align-items: center;
+                    padding: 12px 16px;
+                    border: 2px solid #eee;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    transition: all 0.2s;
+                }
+
+                .radio-box:hover {
+                    border-color: #ddd;
+                    background: #fafafa;
+                }
+
+                .radio-box input[type="radio"] {
+                    margin-right: 12px;
+                    accent-color: var(--col-terra);
+                    transform: scale(1.2);
+                }
+
+                .radio-box:has(input:checked) {
+                    border-color: var(--col-terra);
+                    background: #fff9f5;
+                }
+
+                .btn-submit {
+                    background: var(--text-main);
+                    color: #fff;
+                    border: none;
+                    padding: 1rem 4rem;
+                    font-size: 1.1rem;
+                    border-radius: 50px;
+                    cursor: pointer;
+                    transition: transform 0.2s, opacity 0.2s;
+                    font-family: var(--font-serif);
+                    margin-top: 1rem;
+                }
+
+                .btn-submit:hover {
+                    transform: translateY(-3px);
+                    opacity: 0.9;
+                    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                }
+            </style>
+
+            <script>
+                function showResult() {
+                    const form = document.getElementById('diagnosisForm');
+                    if (form.checkValidity()) {
+                        document.getElementById('resultArea').style.display = 'block';
+                        document.getElementById('resultArea').scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            </script>
         </div>
     </section>
 
