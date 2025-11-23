@@ -13,6 +13,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@500;700&family=Jost:wght@400;600&display=swap"
         rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         /* =========================================
@@ -426,6 +427,73 @@
             margin: 0 15px;
             font-size: 0.9rem;
         }
+
+        /* Mock Result Styles */
+        .mock-result-card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 380px;
+            margin: 0 auto;
+            border: 1px solid #eee;
+            text-align: center;
+            padding-bottom: 2rem;
+        }
+
+        .mock-hero {
+            background: linear-gradient(180deg, rgba(230, 142, 109, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+            padding: 40px 20px 20px;
+        }
+
+        .mock-badge {
+            display: inline-block;
+            background: var(--col-terra);
+            color: #fff;
+            padding: 4px 16px;
+            border-radius: 50px;
+            font-family: var(--font-en);
+            font-weight: 600;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .mock-icon-wrapper {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.5rem;
+            position: relative;
+        }
+
+        .mock-icon {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .mock-title {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .mock-copy {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .mock-chart-container {
+            width: 100%;
+            max-width: 280px;
+            margin: 0 auto;
+            position: relative;
+        }
     </style>
 </head>
 
@@ -498,7 +566,20 @@
             </div>
 
             <div class="result-image-container fade-up">
-                <img src="images/diagnosis_result_sample.png" alt="診断結果サンプル" class="result-sample-img">
+                <!-- Mock Result UI -->
+                <div class="mock-result-card">
+                    <div class="mock-hero">
+                        <div class="mock-badge">DIAGNOSIS RESULT</div>
+                        <div class="mock-icon-wrapper">
+                            <img src="https://placehold.co/200x200/e68e6d/fff?text=A" alt="Type A" class="mock-icon">
+                        </div>
+                        <h3 class="mock-title">個人事業主タイプ</h3>
+                        <p class="mock-copy">自分の名前で価値を届ける、<br>独立独歩のチャレンジャー。</p>
+                    </div>
+                    <div class="mock-chart-container">
+                        <canvas id="mockChart"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -596,6 +677,49 @@
                 });
             }, { rootMargin: '0px 0px -50px 0px', threshold: 0.1 });
             document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+            // Mock Chart
+            const ctx = document.getElementById('mockChart').getContext('2d');
+            const colorMain = 'rgba(230, 142, 109, 1)';
+            const colorBg = 'rgba(230, 142, 109, 0.2)';
+
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['主体性', '協調性', '論理性', '感性', '安定性'],
+                    datasets: [{
+                        label: 'Type A',
+                        data: [5, 2, 4, 3, 2],
+                        backgroundColor: colorBg,
+                        borderColor: colorMain,
+                        borderWidth: 2,
+                        pointBackgroundColor: colorMain,
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: colorMain,
+                        pointRadius: 3
+                    }]
+                },
+                options: {
+                    scales: {
+                        r: {
+                            angleLines: { display: true, color: '#eee' },
+                            grid: { color: '#eee' },
+                            pointLabels: {
+                                font: { size: 10, family: '"Noto Sans JP", sans-serif' },
+                                color: '#999'
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 5,
+                            ticks: { display: false }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    maintainAspectRatio: false
+                }
+            });
         });
     </script>
 </body>
