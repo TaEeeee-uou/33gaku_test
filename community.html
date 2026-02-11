@@ -143,9 +143,82 @@
             opacity: 0.6;
         }
 
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 110;
+            padding: 8px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text-main);
+            transition: transform 0.3s var(--easing), opacity 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
         @media(max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
             .nav-pc {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                max-width: 300px;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.97);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 120px 40px 40px;
+                gap: 0;
+                transition: right 0.4s var(--easing);
+                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.08);
+                z-index: 105;
+                display: flex;
+            }
+
+            .nav-pc a {
+                font-size: 1.1rem;
+                padding: 16px 0;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            }
+
+            .nav-pc.open {
+                right: 0;
+            }
+
+            .nav-overlay {
                 display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.3);
+                z-index: 104;
+            }
+
+            .nav-overlay.show {
+                display: block;
             }
         }
 
@@ -458,12 +531,18 @@
     <header>
         <div class="header-inner">
             <a href="index.html" class="logo">Skill Map Lab</a>
-            <nav class="nav-pc">
+            <nav class="nav-pc" id="navMenu">
                 <a href="index.html">ホーム</a>
                 <a href="diagnosis.html">診断について</a>
                 <a href="courses.html">講座一覧</a>
                 <a href="#" class="active" style="opacity: 1; border-bottom: 1px solid #333;">コミュニティ</a>
             </nav>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="nav-overlay" id="navOverlay"></div>
         </div>
     </header>
 
@@ -560,18 +639,10 @@
             </div>
 
             <div class="partners-grid fade-up">
-                <!-- 33GAKU -->
-                <div class="partner-card">
-                    <div class="p-logo" style="color: #333;">33GAKU</div>
-                    <h3>33GAKU</h3>
-                    <p>松本市の「学び」と「遊び」の交差点。<br>各種ワークショップやイベントを開催。</p>
-                </div>
-
-                <!-- Atomica -->
-                <div class="partner-card">
-                    <div class="p-logo" style="color: #2c7a7b;">ATOMica</div>
-                    <h3>アトミカ</h3>
-                    <p>地域とつながるコワーキングスペース。<br>快適な作業環境とコミュニティ機能を提供。</p>
+                <div class="partner-card" style="width: 100%; max-width: 500px; text-align: center;">
+                    <div class="p-logo" style="color: var(--col-blue); font-size: 1.5rem;">Coming Soon</div>
+                    <h3>連携拠点は準備中です</h3>
+                    <p>地域の学び場やコワーキングスペースとの連携を進めています。<br>詳細が決まり次第お知らせします。</p>
                 </div>
             </div>
         </div>
@@ -598,7 +669,7 @@
                 <a href="contact.html">Contact</a>
                 <a href="privacy.html">Privacy Policy</a>
             </div>
-            <p class="copy">&copy; 2024 Skill Map Lab.</p>
+            <p class="copy">&copy; 2026 Skill Map Lab.</p>
         </div>
     </footer>
 
@@ -614,6 +685,26 @@
                 });
             }, { rootMargin: '0px 0px -50px 0px', threshold: 0.1 });
             document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+            // Mobile Menu
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('navMenu');
+            const navOverlay = document.getElementById('navOverlay');
+
+            function toggleMenu() {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('open');
+                navOverlay.classList.toggle('show');
+                document.body.style.overflow = navMenu.classList.contains('open') ? 'hidden' : '';
+            }
+
+            hamburger.addEventListener('click', toggleMenu);
+            navOverlay.addEventListener('click', toggleMenu);
+            navMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navMenu.classList.contains('open')) toggleMenu();
+                });
+            });
         });
     </script>
 </body>
