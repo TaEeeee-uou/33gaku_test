@@ -5,392 +5,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skill Map Lab | 新しい働き方を見つける</title>
-    <meta name="description" content="あなたの働き方とスキルを診断し、おすすめのeラーニング講座を提案します。">
+    <meta name="description" content="3分の診断で、あなたに合った働き方とスキルアップ講座が見つかります。在宅・副業・フリーランスなど理想のワークスタイルを実現。">
 
-    <!-- Google Fonts -->
+    <!-- OGP -->
+    <meta property="og:title" content="Skill Map Lab | 新しい働き方を見つける">
+    <meta property="og:description" content="3分の診断で、あなたに合った働き方とスキルアップ講座が見つかります。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://taeeeee-uou.github.io/33gaku_test/">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@500;700&family=Jost:wght@400;600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@500;700&family=Jost:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Common CSS -->
+    <link rel="stylesheet" href="common.css">
 
     <style>
-        /* =========================================
-           Design Tokens & Reset
-           ========================================= */
-        :root {
-            /* Colors */
-            --bg-body: #f9f9f7;
-            /* 紙のようなオフホワイト */
-            --bg-white: #ffffff;
-            --text-main: #2c2c2c;
-            --text-gray: #6e6e6e;
-
-            /* Accents */
-            --col-terra: #e68e6d;
-            /* Terracotta */
-            --col-blue: #7da8c3;
-            /* Slate Blue */
-            --col-yellow: #f0cd68;
-            /* Mustard */
-            --col-green: #94bca0;
-            /* Sage */
-
-            /* Fonts */
-            --font-sans: "Noto Sans JP", sans-serif;
-            --font-serif: "Shippori Mincho", serif;
-            --font-en: "Jost", sans-serif;
-
-            /* UI Elements */
-            --radius-lg: 24px;
-            --radius-md: 12px;
-            --header-h: 80px;
-            --easing: cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: var(--font-sans);
-            color: var(--text-main);
-            line-height: 1.9;
-            background-color: var(--bg-body);
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-            transition: opacity 0.3s;
-        }
-
-        ul {
-            list-style: none;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* =========================================
-           Utilities & Typography
-           ========================================= */
-        .container {
-            width: 88%;
-            max-width: 1100px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-
-        .section-padding {
-            padding: 120px 0;
-        }
-
-        @media(max-width:768px) {
-            .section-padding {
-                padding: 80px 0;
-            }
-        }
-
-        /* Titles */
-        .heading-group {
-            margin-bottom: 4rem;
-            position: relative;
-        }
-
-        .heading-en {
-            font-family: var(--font-en);
-            font-size: 0.9rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--col-terra);
-            display: block;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .heading-jp {
-            font-family: var(--font-serif);
-            font-size: clamp(2rem, 4vw, 2.8rem);
-            line-height: 1.3;
-            font-weight: 500;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        /* Background Blur Orbs (雰囲気出し) */
-        .bg-orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: 1;
-            /* 画像の上に乗せる */
-            opacity: 0.6;
-            animation: floatOrb 10s infinite alternate var(--easing);
-            pointer-events: none;
-        }
-
-        @keyframes floatOrb {
-            from {
-                transform: translate(0, 0);
-            }
-
-            to {
-                transform: translate(20px, -30px);
-            }
-        }
-
-        /* Buttons */
-        .btn-wrapper {
-            margin-top: 2rem;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 18px 48px;
-            border-radius: 100px;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            transition: transform 0.4s var(--easing), box-shadow 0.4s var(--easing), background-color 0.3s;
-            position: relative;
-            overflow: hidden;
-            font-size: 1rem;
-        }
-
-        .btn-primary {
-            background-color: var(--text-main);
-            color: #fff;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .btn-primary::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 40%;
-            height: 200%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-            transform: skewX(-25deg);
-            transition: left 0.6s ease;
-        }
-
-        .btn-primary:hover::after {
-            left: 120%;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
-        }
-
-        .btn-outline {
-            border: 1px solid var(--text-main);
-            background: transparent;
-        }
-
-        .btn-outline:hover {
-            background: var(--text-main);
-            color: #fff;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Animation Classes */
-        .fade-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s var(--easing), transform 0.8s var(--easing);
-        }
-
-        .fade-up.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .delay-1 {
-            transition-delay: 0.1s;
-        }
-
-        .delay-2 {
-            transition-delay: 0.2s;
-        }
-
-        .delay-3 {
-            transition-delay: 0.3s;
-        }
-
-        /* =========================================
-           1. Header
-           ========================================= */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: var(--header-h);
-            display: flex;
-            align-items: center;
-            z-index: 100;
-            transition: background-color 0.3s;
-        }
-
-        header.scrolled {
-            background-color: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.03);
-        }
-
-        .header-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 92%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            font-family: var(--font-serif);
-            font-size: 1.4rem;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-        }
-
-        .nav-pc {
-            display: flex;
-            gap: 2.5rem;
-        }
-
-        .nav-pc a {
-            font-size: 0.9rem;
-            font-family: var(--font-en);
-            font-weight: 500;
-            position: relative;
-        }
-
-        .nav-pc a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--text-main);
-            transition: width 0.3s;
-        }
-
-        .nav-pc a:hover::after {
-            width: 100%;
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            z-index: 110;
-            padding: 8px;
-        }
-
-        .hamburger span {
-            display: block;
-            width: 24px;
-            height: 2px;
-            background: var(--text-main);
-            transition: transform 0.3s var(--easing), opacity 0.3s;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: translateY(7px) rotate(45deg);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: translateY(-7px) rotate(-45deg);
-        }
-
-        @media(max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
-
-            .nav-pc {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 70%;
-                max-width: 300px;
-                height: 100vh;
-                background: rgba(255, 255, 255, 0.97);
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                padding: 120px 40px 40px;
-                gap: 0;
-                transition: right 0.4s var(--easing);
-                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.08);
-                z-index: 105;
-                display: flex;
-            }
-
-            .nav-pc a {
-                font-size: 1.1rem;
-                padding: 16px 0;
-                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            }
-
-            .nav-pc.open {
-                right: 0;
-            }
-
-            .nav-overlay {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.3);
-                z-index: 104;
-            }
-
-            .nav-overlay.show {
-                display: block;
-            }
-        }
-
-        /* =========================================
-           2. Hero (With Image)
-           ========================================= */
+        /* =============================================
+           Hero
+           ============================================= */
         .hero {
             padding-top: calc(var(--header-h) + 80px);
             padding-bottom: 100px;
             position: relative;
             overflow: hidden;
             background-color: var(--bg-body);
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
         }
 
-        /* 背景画像設定 */
         .hero::before {
             content: '';
             position: absolute;
@@ -398,32 +44,21 @@
             left: 0;
             width: 100%;
             height: 100%;
-
-            /* ▼ ここで画像を指定しています（プレビュー用に類似画像を適用中） */
-            /* 実際にご自身の画像を使う場合は: url('hero-bg.jpg') に書き換えてください */
-            background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000&auto=format&fit=crop');
-
+            background-image: url('images/hero-bg.jpg');
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
-
-            /* おしゃれに見せるフィルター処理 */
-            opacity: 0.25;
-            /* 半透明 */
-            filter: grayscale(100%);
-            /* 色味を消してシックに */
+            opacity: 0.18;
+            filter: grayscale(80%);
             mix-blend-mode: multiply;
-            /* 背景になじませる */
             z-index: 0;
         }
 
-        /* オーブ装飾 */
         .hero-blob-1 {
             top: -10%;
             right: -10%;
             width: 50vw;
             height: 50vw;
-            background: radial-gradient(circle, rgba(230, 142, 109, 0.25) 0%, rgba(255, 255, 255, 0) 70%);
+            background: radial-gradient(circle, rgba(230, 142, 109, 0.3) 0%, transparent 70%);
         }
 
         .hero-blob-2 {
@@ -431,7 +66,7 @@
             left: -10%;
             width: 40vw;
             height: 40vw;
-            background: radial-gradient(circle, rgba(125, 168, 195, 0.25) 0%, rgba(255, 255, 255, 0) 70%);
+            background: radial-gradient(circle, rgba(125, 168, 195, 0.3) 0%, transparent 70%);
         }
 
         .hero-content {
@@ -442,23 +77,40 @@
         }
 
         .tag-capsule {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.8);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(5px);
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            padding: 8px 20px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            padding: 10px 24px;
             border-radius: 50px;
             font-size: 0.85rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+            animation: gentlePulse 3s infinite ease-in-out;
+        }
+
+        .tag-capsule .tag-icon {
+            font-size: 1.1rem;
+        }
+
+        @keyframes gentlePulse {
+            0%, 100% { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04); }
+            50% { box-shadow: 0 4px 25px rgba(230, 142, 109, 0.15); }
         }
 
         .hero h1 {
             font-family: var(--font-serif);
-            font-size: clamp(2.2rem, 6vw, 3.8rem);
-            line-height: 1.25;
+            font-size: clamp(2.4rem, 6vw, 3.8rem);
+            line-height: 1.3;
             margin-bottom: 1.5rem;
             letter-spacing: 0.02em;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(transparent 60%, rgba(240, 205, 104, 0.35) 60%);
+            padding: 0 4px;
         }
 
         .hero p {
@@ -470,92 +122,76 @@
             margin-right: auto;
         }
 
-        /* =========================================
-           3. About (Features with SVG)
-           ========================================= */
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* =============================================
+           Pain Points (PASONA: P/A)
+           ============================================= */
+        .pain-section {
+            background: linear-gradient(180deg, #fff 0%, var(--bg-body) 100%);
+            padding: 100px 0;
+        }
+
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .pain-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: #fff;
+            padding: 1.5rem 2rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-soft);
+            border-left: 3px solid transparent;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .pain-item:hover {
+            border-left-color: var(--col-terra);
+            transform: translateX(4px);
+        }
+
+        .pain-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .pain-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .pain-hook {
+            text-align: center;
+            margin-top: 3rem;
+            font-family: var(--font-serif);
+            font-size: 1.3rem;
+            color: var(--col-terra);
+        }
+
+        /* =============================================
+           About Cards
+           ============================================= */
         .about-cards {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
         }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            padding: 3rem 2rem;
-            border-radius: var(--radius-lg);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
-            transition: transform 0.3s;
-        }
-
-        .glass-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .icon-box {
-            width: 70px;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #fff;
-            border-radius: 20px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
-            margin-bottom: 1.5rem;
-            transition: transform 0.3s ease;
-        }
-
-        .glass-card:hover .icon-box {
-            transform: scale(1.1) rotate(-5deg);
-        }
-
-        /* SVG Icons */
-        .icon-svg {
-            width: 32px;
-            height: 32px;
-            fill: none;
-            stroke-width: 1.8;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .stroke-terra {
-            stroke: var(--col-terra);
-        }
-
-        .stroke-blue {
-            stroke: var(--col-blue);
-        }
-
-        .stroke-yellow {
-            stroke: var(--col-yellow);
-        }
-
-        .glass-card h3 {
-            font-family: var(--font-serif);
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-        }
-
-        .glass-card p {
-            font-size: 0.95rem;
-            color: var(--text-gray);
-        }
-
-        @media(max-width: 768px) {
-            .about-cards {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* =========================================
-           4. Work Types
-           ========================================= */
-        .bg-white-soft {
-            background-color: #fff;
-        }
-
+        /* =============================================
+           Work Types
+           ============================================= */
         .type-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -568,11 +204,13 @@
             padding: 2.5rem;
             position: relative;
             overflow: hidden;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
         }
 
         .type-card:hover {
             background-color: #f4f4f0;
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-soft);
         }
 
         .type-num {
@@ -600,25 +238,20 @@
             border-radius: 50%;
         }
 
-        .dot-a {
-            background: var(--col-terra);
-        }
-
-        .dot-b1 {
-            background: var(--col-blue);
-        }
-
-        .dot-b2 {
-            background: var(--col-yellow);
-        }
-
-        .dot-c {
-            background: var(--col-green);
-        }
+        .dot-a { background: var(--col-terra); }
+        .dot-b1 { background: var(--col-blue); }
+        .dot-b2 { background: var(--col-yellow); }
+        .dot-c { background: var(--col-green); }
 
         .type-card h3 {
             font-family: var(--font-serif);
             font-size: 1.4rem;
+        }
+
+        .type-card > p {
+            font-size: 0.95rem;
+            color: var(--text-gray);
+            margin-top: 0.5rem;
         }
 
         .type-list {
@@ -637,22 +270,16 @@
             content: '';
             position: absolute;
             left: 0;
-            top: 0.6em;
+            top: 0.65em;
             width: 6px;
-            height: 1px;
+            height: 2px;
             background: var(--text-main);
+            border-radius: 1px;
         }
 
-        @media(max-width: 768px) {
-            .type-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-        }
-
-        /* =========================================
-           5. Steps
-           ========================================= */
+        /* =============================================
+           Steps
+           ============================================= */
         .steps-wrapper {
             display: flex;
             justify-content: space-between;
@@ -666,8 +293,9 @@
             top: 25px;
             left: 50px;
             right: 50px;
-            height: 1px;
-            background: #ddd;
+            height: 2px;
+            background: linear-gradient(90deg, var(--col-terra), var(--col-blue), var(--col-green));
+            border-radius: 1px;
             z-index: 0;
         }
 
@@ -690,87 +318,95 @@
             font-family: var(--font-en);
             font-weight: 600;
             margin: 0 auto 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-        @media(max-width: 768px) {
-            .steps-wrapper {
-                flex-direction: column;
-                gap: 2rem;
-            }
-
-            .steps-wrapper::before {
-                display: none;
-            }
-
-            .step-item {
-                width: 100%;
-                display: flex;
-                align-items: center;
-                text-align: left;
-                gap: 1rem;
-                padding: 0;
-            }
-
-            .step-circle {
-                margin: 0;
-                flex-shrink: 0;
-            }
+        .step-item h3 {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
         }
 
-        /* =========================================
-           6. Diagnosis
-           ========================================= */
+        .step-item p {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        /* =============================================
+           Diagnosis CTA
+           ============================================= */
         .diagnosis-area {
             background: linear-gradient(135deg, #eef2f5 0%, #e6e9f0 100%);
             padding: 60px 40px;
-            border-radius: var(--radius-lg);
-            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5);
+            border-radius: var(--radius-xl);
+            box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.5);
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .iframe-mock {
-            background: #fff;
-            max-width: 680px;
-            height: 500px;
-            margin: 2rem auto 0;
-            border-radius: 8px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-            display: flex;
+        .diagnosis-area::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 60%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(230, 142, 109, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .diagnosis-area .time-badge {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            color: #ccc;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-gray);
         }
 
-        /* =========================================
-           7. Courses (Abstract Art)
-           ========================================= */
+        /* =============================================
+           Courses
+           ============================================= */
         .course-slider {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
-            overflow-x: auto;
-            padding-bottom: 2rem;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        .course-slider::-webkit-scrollbar {
-            display: none;
         }
 
         .course-art-card {
-            min-width: 320px;
             background: #fff;
-            border-radius: var(--radius-md);
+            border-radius: var(--radius-lg);
             overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.4s var(--easing), box-shadow 0.4s var(--easing);
             display: flex;
             flex-direction: column;
         }
 
         .course-art-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .course-thumb {
+            height: 200px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .course-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s var(--easing);
+        }
+
+        .course-art-card:hover .course-thumb img {
+            transform: scale(1.05);
         }
 
         .art-placeholder {
@@ -779,18 +415,9 @@
             position: relative;
         }
 
-        /* Abstract CSS Art */
-        .art-1 {
-            background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
-        }
-
-        .art-2 {
-            background: linear-gradient(120deg, #fddb92 0%, #d1fdff 100%);
-        }
-
-        .art-3 {
-            background: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
-        }
+        .art-1 { background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); }
+        .art-2 { background: linear-gradient(120deg, #fddb92 0%, #d1fdff 100%); }
+        .art-3 { background: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%); }
 
         .course-info {
             padding: 1.5rem;
@@ -802,10 +429,11 @@
         .course-tag {
             font-size: 0.7rem;
             font-weight: 700;
-            color: #999;
+            color: var(--col-terra);
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.12em;
             margin-bottom: 0.5rem;
+            font-family: var(--font-en);
         }
 
         .course-info h3 {
@@ -828,80 +456,131 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            color: var(--text-main);
         }
 
         .link-line span {
-            transition: transform 0.3s;
+            transition: transform 0.3s var(--easing);
         }
 
         .course-art-card:hover .link-line span {
-            transform: translateX(5px);
+            transform: translateX(6px);
         }
 
-        @media(max-width: 768px) {
-            .course-slider {
-                flex-direction: column;
-                overflow: visible;
-            }
-
-            .course-art-card {
-                min-width: 100%;
-            }
+        /* =============================================
+           Testimonials
+           ============================================= */
+        .testimonial-section {
+            background: linear-gradient(180deg, var(--bg-body) 0%, #fff 100%);
         }
 
-        /* =========================================
-           8. Community & Footer
-           ========================================= */
-        .community-area {
-            background-color: #fbfbf5;
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: #fff;
+            padding: 2.5rem 2rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft);
             position: relative;
+            transition: transform 0.3s;
         }
 
-        .community-area::before {
-            content: '';
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .testimonial-card::before {
+            content: '"';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: radial-gradient(#ddd 1px, transparent 1px);
-            background-size: 40px 40px;
-            opacity: 0.3;
-            pointer-events: none;
+            top: 15px;
+            left: 20px;
+            font-size: 4rem;
+            font-family: var(--font-serif);
+            color: rgba(230, 142, 109, 0.15);
+            line-height: 1;
         }
 
-        footer {
-            background: var(--text-main);
+        .testimonial-text {
+            font-size: 0.95rem;
+            color: var(--text-gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--grad-warm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: #fff;
-            padding: 80px 0 30px;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .author-info {
+            font-size: 0.85rem;
+        }
+
+        .author-name {
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .author-role {
+            color: var(--text-gray);
+            font-size: 0.8rem;
+        }
+
+        /* =============================================
+           Stats
+           ============================================= */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            padding: 3rem 0;
+        }
+
+        .stat-item {
             text-align: center;
         }
 
-        .footer-links {
-            margin-bottom: 3rem;
-        }
-
-        .footer-links a {
-            color: #aaa;
-            margin: 0 15px;
-            font-size: 0.9rem;
-        }
-
-        .footer-links a:hover {
-            color: #fff;
-        }
-
-        .copy {
-            font-size: 0.75rem;
-            color: #666;
+        .stat-number {
             font-family: var(--font-en);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--col-terra);
+            line-height: 1;
+            margin-bottom: 0.5rem;
         }
 
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        /* =============================================
+           Community Section
+           ============================================= */
         .community-area {
             position: relative;
             overflow: hidden;
-            /* 背景色も少し入れておく */
-            background-color: #f9f9f7;
+            background-color: var(--bg-body);
         }
 
         .community-area::before {
@@ -911,13 +590,80 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2000&auto=format&fit=crop');
+            background-image: url('images/community-bg.jpg');
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0.15;
+            opacity: 0.12;
             mix-blend-mode: multiply;
             pointer-events: none;
+        }
+
+        /* =============================================
+           Responsive Overrides
+           ============================================= */
+        @media (max-width: 768px) {
+            .hero {
+                min-height: auto;
+                padding-top: calc(var(--header-h) + 50px);
+                padding-bottom: 70px;
+            }
+
+            .hero h1 {
+                font-size: clamp(1.8rem, 7vw, 2.6rem);
+            }
+
+            .pain-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .type-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .steps-wrapper {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .steps-wrapper::before {
+                display: none;
+            }
+
+            .step-item {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                text-align: left;
+                gap: 1rem;
+                padding: 0;
+            }
+
+            .step-circle {
+                margin: 0;
+                flex-shrink: 0;
+            }
+
+            .course-slider {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-bar {
+                gap: 2rem;
+                flex-wrap: wrap;
+            }
+
+            .diagnosis-area {
+                padding: 40px 24px;
+            }
         }
     </style>
 </head>
@@ -927,49 +673,87 @@
     <!-- Header -->
     <header id="header">
         <div class="header-inner">
-            <div class="logo">Skill Map Lab</div>
+            <a href="index.html" class="logo">Skill Map <span class="logo-accent">Lab</span></a>
             <nav class="nav-pc" id="navMenu">
                 <a href="#intro">はじめての方へ</a>
                 <a href="diagnosis.html">診断について</a>
                 <a href="courses.html">講座一覧</a>
                 <a href="community.html">コミュニティ</a>
             </nav>
-            <div class="hamburger" id="hamburger">
+            <button class="hamburger" id="hamburger" aria-label="メニューを開く">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
             <div class="nav-overlay" id="navOverlay"></div>
         </div>
     </header>
 
     <!-- Hero -->
     <section class="hero" id="top">
-        <!-- 背景に色玉を配置 -->
         <div class="bg-orb hero-blob-1"></div>
         <div class="bg-orb hero-blob-2"></div>
 
         <div class="container fade-up">
             <div class="hero-content">
-                <span class="tag-capsule">3 minutes diagnosis</span>
-                <h1>あなたの<br>“これからの働き方”に、<br>いちばん合う学びを。</h1>
+                <span class="tag-capsule">
+                    <span class="tag-icon">⏱</span>
+                    たった3分の無料診断
+                </span>
+                <h1>あなたの<br>"これからの働き方"に、<br>いちばん合う<span class="highlight">学び</span>を。</h1>
                 <p>
                     理想のライフスタイルは人それぞれ。<br>
                     簡単な診断で、無理なく続けられる<br>
-                    “わたし専用”のスキルアップルートをご提案します。
+                    "わたし専用"のスキルアップルートをご提案します。
                 </p>
-                <div class="btn-wrapper">
-                    <a href="diagnosis.html" class="btn btn-primary">診断をはじめる</a>
+                <div class="hero-buttons">
+                    <a href="diagnosis_form.html" class="btn btn-terra">
+                        無料で診断する <span class="btn-icon">→</span>
+                    </a>
+                    <a href="#intro" class="btn btn-outline">詳しく見る</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Intro -->
+    <!-- Pain Points -->
+    <section class="pain-section">
+        <div class="container">
+            <div class="heading-group text-center fade-up">
+                <span class="heading-en">Your Concerns</span>
+                <h2 class="heading-jp">こんな悩み、ありませんか？</h2>
+            </div>
+
+            <div class="pain-grid">
+                <div class="pain-item fade-up delay-1">
+                    <span class="pain-icon">😔</span>
+                    <p class="pain-text">再就職したいけど、何から始めればいいか分からない</p>
+                </div>
+                <div class="pain-item fade-up delay-2">
+                    <span class="pain-icon">🤯</span>
+                    <p class="pain-text">情報が多すぎて、自分に合ったスキルが見つからない</p>
+                </div>
+                <div class="pain-item fade-up delay-1">
+                    <span class="pain-icon">⏰</span>
+                    <p class="pain-text">子育てしながらでも、ムリなく学べる方法が知りたい</p>
+                </div>
+                <div class="pain-item fade-up delay-2">
+                    <span class="pain-icon">💭</span>
+                    <p class="pain-text">自分の強みって何？活かせる仕事はあるの？</p>
+                </div>
+            </div>
+
+            <p class="pain-hook fade-up">
+                → Skill Map Lab なら、<br class="sp-only">3分の診断で<strong>あなただけの答え</strong>が見つかります。
+            </p>
+        </div>
+    </section>
+
+    <!-- Intro / About -->
     <section id="intro" class="section-padding">
         <div class="container">
             <div class="heading-group text-center fade-up">
-                <span class="heading-en">What you get</span>
+                <span class="heading-en">What You Get</span>
                 <h2 class="heading-jp">この診断でわかること</h2>
             </div>
 
@@ -1020,10 +804,10 @@
             <div class="heading-group text-center fade-up">
                 <span class="heading-en">4 Work Styles</span>
                 <h2 class="heading-jp">診断される働き方タイプ</h2>
+                <p class="heading-sub">あなたの性格・環境・理想のライフスタイルから、4つのタイプに分類します。</p>
             </div>
 
             <div class="type-grid">
-                <!-- A -->
                 <div class="type-card fade-up">
                     <span class="type-num">A</span>
                     <div class="type-head">
@@ -1036,7 +820,6 @@
                         <li>集客・ブランディングの実践</li>
                     </ul>
                 </div>
-                <!-- B1 -->
                 <div class="type-card fade-up delay-1">
                     <span class="type-num">B</span>
                     <div class="type-head">
@@ -1049,7 +832,6 @@
                         <li>Google Workspace活用スキル</li>
                     </ul>
                 </div>
-                <!-- B2 -->
                 <div class="type-card fade-up">
                     <span class="type-num">C</span>
                     <div class="type-head">
@@ -1062,7 +844,6 @@
                         <li>Canvaなどのデザインツール習得</li>
                     </ul>
                 </div>
-                <!-- C -->
                 <div class="type-card fade-up delay-1">
                     <span class="type-num">D</span>
                     <div class="type-head">
@@ -1083,7 +864,7 @@
     <section class="section-padding">
         <div class="container">
             <div class="heading-group text-center fade-up">
-                <span class="heading-en">How it works</span>
+                <span class="heading-en">How It Works</span>
                 <h2 class="heading-jp">使い方はシンプル</h2>
             </div>
 
@@ -1092,36 +873,62 @@
                     <div class="step-circle">01</div>
                     <div class="step-text">
                         <h3>フォームに入力</h3>
-                        <p style="font-size:0.9rem; color:var(--text-gray);">今の状況や希望について<br>選択肢から答えます。</p>
+                        <p>今の状況や希望について<br>選択肢から答えます。</p>
                     </div>
                 </div>
                 <div class="step-item fade-up delay-1">
                     <div class="step-circle">02</div>
                     <div class="step-text">
                         <h3>自動で分析</h3>
-                        <p style="font-size:0.9rem; color:var(--text-gray);">システムがあなたの<br>タイプと課題を診断。</p>
+                        <p>システムがあなたの<br>タイプと課題を診断。</p>
                     </div>
                 </div>
                 <div class="step-item fade-up delay-2">
                     <div class="step-circle">03</div>
                     <div class="step-text">
                         <h3>学びのご提案</h3>
-                        <p style="font-size:0.9rem; color:var(--text-gray);">あなたに最適な講座が<br>その場ですぐ分かります。</p>
+                        <p>あなたに最適な講座が<br>その場ですぐ分かります。</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Diagnosis -->
+    <!-- Stats -->
+    <section class="bg-white-soft" style="padding: 60px 0;">
+        <div class="container">
+            <div class="stats-bar fade-up">
+                <div class="stat-item">
+                    <div class="stat-number" data-count="500">0</div>
+                    <div class="stat-label">診断利用者</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="12">0</div>
+                    <div class="stat-label">講座ラインナップ</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="94">0</div>
+                    <div class="stat-label">満足度 %</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="3">0</div>
+                    <div class="stat-label">診断 分</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diagnosis CTA -->
     <section id="diagnosis" class="section-padding">
         <div class="container">
-            <div class="diagnosis-area fade-up">
-                <h2 class="heading-jp" style="margin-bottom:1rem;">まずは診断から</h2>
-                <p style="color:var(--text-gray);">所要時間は3〜5分。あなたの現在地を知りましょう。</p>
-
+            <div class="diagnosis-area fade-up scale-in">
+                <span class="time-badge">⏱ 所要時間 3〜5分</span>
+                <h2 class="heading-jp" style="margin-bottom:1rem;">まずは無料診断から</h2>
+                <p style="color:var(--text-gray); max-width: 480px; margin: 0 auto;">あなたの現在地を知ることが、理想の働き方への第一歩です。</p>
                 <div class="btn-wrapper">
-                    <a href="diagnosis.html" class="btn btn-primary">診断について</a>
+                    <a href="diagnosis_form.html" class="btn btn-terra">
+                        無料で診断する <span class="btn-icon">→</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -1133,32 +940,36 @@
             <div class="heading-group text-center fade-up">
                 <span class="heading-en">Learning Courses</span>
                 <h2 class="heading-jp">学びのサンプル</h2>
+                <p class="heading-sub">診断結果に基づいて、あなたにぴったりの講座をご提案します。</p>
             </div>
 
             <div class="course-slider fade-up">
-                <!-- C1 -->
                 <div class="course-art-card">
-                    <div class="art-placeholder art-1"></div>
+                    <div class="course-thumb">
+                        <img src="images/course_google_drive.png" alt="Googleドライブ基礎講座">
+                    </div>
                     <div class="course-info">
-                        <span class="course-tag">Type C</span>
+                        <span class="course-tag">Type B</span>
                         <h3>事務テレワーカーのための<br>Googleドライブ基礎</h3>
                         <p>ファイル整理や共有設定など、在宅ワークで必須のクラウドスキルを習得。</p>
                         <a href="courses.html" class="link-line">詳しく見る <span>→</span></a>
                     </div>
                 </div>
-                <!-- C2 -->
                 <div class="course-art-card">
-                    <div class="art-placeholder art-2"></div>
+                    <div class="course-thumb">
+                        <img src="images/course_canva.png" alt="Canva実践講座">
+                    </div>
                     <div class="course-info">
-                        <span class="course-tag">Type A / B2</span>
-                        <h3>Canvaでつくる<br>“最初の3投稿”実践講座</h3>
+                        <span class="course-tag">Type A / C</span>
+                        <h3>Canvaでつくる<br>"最初の3投稿"実践講座</h3>
                         <p>Instagram用の投稿画像を作りながら、デザインの基本ルールを学びます。</p>
                         <a href="courses.html" class="link-line">詳しく見る <span>→</span></a>
                     </div>
                 </div>
-                <!-- C3 -->
                 <div class="course-art-card">
-                    <div class="art-placeholder art-3"></div>
+                    <div class="course-thumb">
+                        <img src="images/course_side_hustle.png" alt="小さな副業入門">
+                    </div>
                     <div class="course-info">
                         <span class="course-tag">Type D</span>
                         <h3>スマホだけの<br>小さな副業入門</h3>
@@ -1170,44 +981,88 @@
         </div>
     </section>
 
+    <!-- Testimonials -->
+    <section class="section-padding testimonial-section">
+        <div class="container">
+            <div class="heading-group text-center fade-up">
+                <span class="heading-en">Voices</span>
+                <h2 class="heading-jp">利用者の声</h2>
+            </div>
+
+            <div class="testimonial-grid">
+                <div class="testimonial-card fade-up delay-1">
+                    <p class="testimonial-text">診断がきっかけでCanva講座を受講。今ではインスタの投稿デザインを任される副業をしています！</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">Y</div>
+                        <div class="author-info">
+                            <div class="author-name">Y.Kさん</div>
+                            <div class="author-role">30代・SNSクリエイター</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card fade-up delay-2">
+                    <p class="testimonial-text">事務テレワーカーと診断され、Google Workspace講座を受講。在宅で経理の仕事を始められました。</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">M</div>
+                        <div class="author-info">
+                            <div class="author-name">M.Tさん</div>
+                            <div class="author-role">40代・在宅事務ワーカー</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card fade-up delay-3">
+                    <p class="testimonial-text">子育て中でも自分のペースで進められる講座が見つかりました。スモールワークから始めて月3万円の収入に。</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">S</div>
+                        <div class="author-info">
+                            <div class="author-name">S.Hさん</div>
+                            <div class="author-role">30代・2児のママ</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Community -->
     <section id="community" class="section-padding community-area">
         <div class="container text-center fade-up">
+            <span class="heading-en">Community</span>
             <h2 class="heading-jp" style="margin-bottom: 1.5rem;">一人でがんばらなくていい場所へ</h2>
             <p style="max-width: 600px; margin: 0 auto 2.5rem; color: var(--text-gray);">
                 地域の学び場やコワーキングスペースと連携予定。<br>
-                “ローカル×オンライン”なコミュニティで、<br class="pc-only">仲間と一緒にチャレンジしませんか？
+                "ローカル×オンライン"なコミュニティで、<br class="pc-only">仲間と一緒にチャレンジしませんか？
             </p>
-            <a href="community.html" class="btn btn-outline">コミュニティについて</a>
+            <a href="community.html" class="btn btn-outline">仲間を見つける</a>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-links">
-                <a href="#">Home</a>
+            <div class="footer-logo">Skill Map <span style="color:var(--col-terra)">Lab</span></div>
+            <nav class="footer-nav">
+                <a href="index.html">Home</a>
+                <a href="diagnosis.html">診断</a>
+                <a href="courses.html">講座一覧</a>
+                <a href="community.html">コミュニティ</a>
                 <a href="contact.html">Contact</a>
                 <a href="privacy.html">Privacy Policy</a>
-            </div>
-            <p class="copy">&copy; 2026 Skill Map Lab.</p>
+            </nav>
+            <p class="footer-copy">&copy; 2026 Skill Map Lab. All rights reserved.</p>
         </div>
     </footer>
 
+    <!-- Floating CTA (mobile) -->
+    <div class="floating-cta" id="floatingCta">
+        <a href="diagnosis_form.html" class="btn btn-terra">
+            無料で診断する <span class="btn-icon">→</span>
+        </a>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Smooth Scroll
-            const scrollLinks = document.querySelectorAll('.js-scroll');
-            scrollLinks.forEach(link => {
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const href = this.getAttribute('href');
-                    const target = document.querySelector(href);
-                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                });
-            });
-
-            // 2. Fade Up Animation
+            // 1. Fade-up & Scale-in Animations
             const observer = new IntersectionObserver((entries, obs) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1215,18 +1070,30 @@
                         obs.unobserve(entry.target);
                     }
                 });
-            }, { rootMargin: '0px 0px -50px 0px', threshold: 0.1 });
+            }, { rootMargin: '0px 0px -60px 0px', threshold: 0.1 });
 
-            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+            document.querySelectorAll('.fade-up, .scale-in').forEach(el => observer.observe(el));
 
-            // 3. Header Background
+            // 2. Header Background on Scroll
             const header = document.getElementById('header');
+            const floatingCta = document.getElementById('floatingCta');
+            let lastScrollY = 0;
+
             window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) header.classList.add('scrolled');
+                const scrollY = window.scrollY;
+
+                // Header
+                if (scrollY > 50) header.classList.add('scrolled');
                 else header.classList.remove('scrolled');
+
+                // Floating CTA — show after scrolling past hero
+                if (scrollY > 500) floatingCta.classList.add('is-visible');
+                else floatingCta.classList.remove('is-visible');
+
+                lastScrollY = scrollY;
             });
 
-            // 4. Mobile Menu
+            // 3. Mobile Menu
             const hamburger = document.getElementById('hamburger');
             const navMenu = document.getElementById('navMenu');
             const navOverlay = document.getElementById('navOverlay');
@@ -1245,6 +1112,33 @@
                     if (navMenu.classList.contains('open')) toggleMenu();
                 });
             });
+
+            // 4. Counter Animation
+            const counters = document.querySelectorAll('.stat-number[data-count]');
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const el = entry.target;
+                        const target = parseInt(el.dataset.count);
+                        const duration = 2000;
+                        const start = performance.now();
+                        const suffix = el.textContent.replace(/[0-9]/g, '');
+
+                        function tick(now) {
+                            const elapsed = now - start;
+                            const progress = Math.min(elapsed / duration, 1);
+                            const eased = 1 - Math.pow(1 - progress, 3);
+                            el.textContent = Math.round(target * eased) + (target >= 100 ? '+' : '');
+                            if (progress < 1) requestAnimationFrame(tick);
+                        }
+
+                        requestAnimationFrame(tick);
+                        counterObserver.unobserve(el);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            counters.forEach(el => counterObserver.observe(el));
         });
     </script>
 </body>
